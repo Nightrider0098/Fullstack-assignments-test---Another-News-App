@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 export default function Card(props) {
 
     const [hiddenState, setHiddenState] = useState((localStorage.getItem(props.lan + props.idx + 'd') === 'true') ? true : false)
-    const [likes, setLikes] = useState((localStorage.getItem(props.lan + props.idx + 'l') ? true : false))
+    const [likes, setLikes] = useState((localStorage.getItem(props.lan + props.idx + 'l') ? parseInt(localStorage.getItem(props.lan + props.idx + 'l')) : 0))
     return (
         <div >
             <a href={props.data.url} >
@@ -21,8 +21,8 @@ export default function Card(props) {
             </a>
             <div style={props.searchMode ? { display: 'none' } : {}}>
                 <button onClick={() => {
-                    localStorage.setItem(props.lan + props.idx + 'l', !likes)
-                    setLikes(!likes)
+                    localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
+                    setLikes(likes + 1)
                 }}><span className="like_count">{likes === true ? 1 : 0}{" "}</span>Like</button>
                 <button onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'd', !hiddenState)
