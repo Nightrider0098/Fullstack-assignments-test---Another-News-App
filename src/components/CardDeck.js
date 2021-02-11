@@ -13,7 +13,8 @@ export default function CardDeck(props) {
         if (currentData.length > 0) {
             // console.log('printing')
             for (let i = 0; i < 3; i++) {
-                retArray.push(< Card lan={lan} idx={currentPage * 3 + i - 3} data={currentData[currentPage * 3 + i - 3]} key={lan + currentPage * 3 + i + 'id'} />)
+                retArray.push(< Card lan={lan} idx={currentPage * 3 + i - 3} searchMode={searchString === '' ? false : true} data={currentData[currentPage * 3 + i - 3]} key={lan + currentPage * 3 + i + 'id'
+                } />)
             }
         } return retArray;
     }
