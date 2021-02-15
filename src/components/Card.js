@@ -17,13 +17,14 @@ export default function Card(props) {
                         </div>
                         <div>{props.data.publishedAt}</div>
                     </div>
+                    <button onClick={() => {
+                        localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
+                        setLikes(likes + 1)
+                    }}><span className="like_count">{likes}{" "}</span>Like</button>
                 </div>
             </a>
             <div style={props.searchMode ? { display: 'none' } : {}}>
-                <button onClick={() => {
-                    localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
-                    setLikes(likes + 1)
-                }}><span className="like_count">{likes}{" "}</span>Like</button>
+
                 <button onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'd', !hiddenState)
                     setHiddenState(!hiddenState)

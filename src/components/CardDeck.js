@@ -6,17 +6,19 @@ export default function CardDeck(props) {
     const [currentData, setCurrentData] = useState([])
     const [searchString, setSearchString] = useState('')
     const [justToggle, setJustToggle] = useState(0);
-
+    const [searchMode, setsearchMode] = useState(false);
     const renderCards = () => {
-        let lan = props.lan
-        let retArray = []
-        if (currentData.length > 0) {
-            // console.log('printing')
-            for (let i = 0; i < 3; i++) {
-                retArray.push(< Card lan={lan} idx={currentPage * 3 + i - 3} searchMode={searchString === '' ? false : true} data={currentData[currentPage * 3 + i - 3]} key={lan + currentPage * 3 + i + 'id'
-                } />)
-            }
-        } return retArray;
+        if (currentData && currentData.length) {
+            let lan = props.lan
+            let retArray = []
+            if (currentData.length > 0) {
+                // console.log('printing')
+                for (let i = 0; i < 3; i++) {
+                    retArray.push(< Card lan={lan} idx={currentPage * 3 + i - 3} searchMode={searchString === '' ? false : true} data={currentData[currentPage * 3 + i - 3]} key={lan + currentPage * 3 + i + 'id'
+                    } />)
+                }
+            } return retArray;
+        }
     }
 
 
@@ -35,6 +37,7 @@ export default function CardDeck(props) {
     }, [props.lan])
 
     const searchTheBar = () => {
+        setsearchMode(true)
         fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=cf38da615afef723c4298acb88067130&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
             setCurrentData(data['articles'])
         });
@@ -65,15 +68,16 @@ export default function CardDeck(props) {
             <button id='search' onClick={() => {
                 searchTheBar();
             }}>search</button>
-            <button id='Pre' onClick={() => { currentPage > 1 ? setCurrentPage(currentPage - 1) : undefined }}>Prev</button>
-            <button id='Next' onClick={() => { currentPage < 3 ? setCurrentPage(currentPage + 1) : undefined }}>Next</button>
-            <button id='exitSearchMode' onClick={() => {
+            <button id='Pre' disabled={currentPage == 1 ? true : false} onClick={() => { currentPage > 1 ? setCurrentPage(currentPage - 1) : undefined }}>Prev</button>
+            <button id='Next' disabled={currentPage == 3 ? true : false} onClick={() => { currentPage < 3 ? setCurrentPage(currentPage + 1) : undefined }}>Next</button>
+            <button id='exitSearchMode' style={!searchMode ? { display: 'none' } : {}} onClick={() => {
                 setSearchString('');
+                setsearchMode(false)
                 if (currentPage !== 1)
                     setCurrentPage(1)
                 else
                     setJustToggle(justToggle + 1);
             }}>exitSearch Mode</button>
-        </div>
+        </div >
     )
 }
