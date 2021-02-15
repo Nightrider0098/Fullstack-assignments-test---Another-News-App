@@ -19,15 +19,13 @@ export default function CardDeck(props) {
             } return retArray;
         }
     }
-
-
     useEffect(() => {
 
         setSearchString("")
         setsearchMode(false)
-
+        setCurrentPage(1)
         fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
-            setCurrentData(data['articles'].slice(currentPage * 3 - 3, currentPage * 3 ))
+            setCurrentData(data['articles'].slice(0, 3))
         })
 
 
@@ -40,17 +38,18 @@ export default function CardDeck(props) {
         });
         setCurrentPage(1);
     }
+
     const movePage = (move) => {
         let currPage = currentPage;
         if (currentPage + move < 4 && currentPage + move > 0) {
             setCurrentPage(currentPage + move);
             if (searchMode) {
                 fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=410db42779f25b2d81028050efe65502&page=${currentPage + move}&lang=${props.lan}`).then(e => e.json()).then(data => {
-                    setCurrentData(data['articles'].slice((currPage - 1) * 3, currPage * 3))
+                    setCurrentData(data['articles'].slice((currPage + move - 1) * 3, (currPage + move) * 3))
                 })
             } else {
                 fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${currentPage + move}&lang=${props.lan}`).then(e => e.json()).then(data => {
-                    setCurrentData(data['articles'].slice((currPage - 1) * 3, currPage * 3))
+                    setCurrentData(data['articles'].slice((currPage + move - 1) * 3, (currPage + move) * 3))
                 })
             }
         }
