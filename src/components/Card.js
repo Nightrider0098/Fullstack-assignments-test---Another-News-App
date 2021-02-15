@@ -21,7 +21,7 @@ export default function Card(props) {
                         </div>
                     </div>
                 </a>
-                <button id={props.lan + props.idx + 'l'} onClick={() => {
+                <button id={props.lan + props.idx + 'l'} style={props.searchMode ? { display: 'none' } : {}} onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
                     setLikes(likes + 1)
                 }}><span className="like_count">{likes}{" "}</span>Like</button>

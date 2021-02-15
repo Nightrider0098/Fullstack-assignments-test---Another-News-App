@@ -4,7 +4,9 @@ export default function CardDeck(props) {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [currentData, setCurrentData] = useState([])
-    const [searchString, setSearchString] = useState('')
+    let searchString = props.searchString
+    let setSearchString = props.setSearchString
+    // const [searchString, setSearchString] = useState('')
     const [justToggle, setJustToggle] = useState(0);
     const [searchMode, setsearchMode] = useState(false);
     const renderCards = () => {
@@ -29,16 +31,24 @@ export default function CardDeck(props) {
             setCurrentPage(1);
         }
         else {
-            setSearchString("");
-            fetch(`https://gnews.io/api/v4/top-headlines?token=cf38da615afef723c4298acb88067130&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
-                setCurrentData(data['articles'])
-            })
+            if (searchString !== '') {
+                setsearchMode(true)
+                fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
+                    setCurrentData(data['articles'])
+                });
+                return;
+            }
+            else {
+                fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
+                    setCurrentData(data['articles'])
+                })
+            }
         }
     }, [props.lan])
 
     const searchTheBar = () => {
         setsearchMode(true)
-        fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=cf38da615afef723c4298acb88067130&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
+        fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
             setCurrentData(data['articles'])
         });
         setCurrentData(1);
@@ -46,17 +56,17 @@ export default function CardDeck(props) {
     useEffect(() => {
 
         if (searchString === '')
-            fetch(`https://gnews.io/api/v4/top-headlines?token=cf38da615afef723c4298acb88067130&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
+            fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
                 setCurrentData(data['articles'])
             })
         else {
-            fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=cf38da615afef723c4298acb88067130&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
+            fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=410db42779f25b2d81028050efe65502&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
                 setCurrentData(data['articles'])
             })
         }
     }, [currentPage, justToggle])
 
-   
+
     return (
         <div>
             <input id='searchBox' value={searchString} onChange={(e) => { setSearchString(e.target.value) }} onKeyDown={(e) => {
@@ -66,7 +76,7 @@ export default function CardDeck(props) {
             <button id='search' onClick={() => {
                 searchTheBar();
             }}>search</button>
-            <button id='Pre' disabled={currentPage == 1 ? true : false} onClick={() => { currentPage > 1 ? setCurrentPage(currentPage - 1) : undefined }}>Prev</button>
+            <button id='Prev' disabled={currentPage == 1 ? true : false} onClick={() => { currentPage > 1 ? setCurrentPage(currentPage - 1) : undefined }}>Prev</button>
             <button id='Next' disabled={currentPage == 3 ? true : false} onClick={() => { currentPage < 3 ? setCurrentPage(currentPage + 1) : undefined }}>Next</button>
             <button id='exitSearchMode' style={!searchMode ? { display: 'none' } : {}} onClick={() => {
                 setSearchString('');

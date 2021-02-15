@@ -11,6 +11,7 @@ import {
 import CardDeck from "./CardDeck";
 const App = () => {
 
+  const [searchString, setSearchString] = useState('')
 
   return <div id="main">
     <Link to="/hi" id='hi' >Hindi</Link>
@@ -18,13 +19,13 @@ const App = () => {
     <Link to="/" id='en' >English</Link>
     <Switch>
       <Route path="/hi">
-        <CardDeck lan={'hi'} />
+        <CardDeck lan={'hi'} searchString={searchString} setSearchString={setSearchString} />
       </Route>
       <Route path="/mr">
-        <CardDeck lan={'mr'} />
+        <CardDeck lan={'mr'} searchString={searchString} setSearchString={setSearchString} />
       </Route>
       <Route path="/">
-        <CardDeck lan={'en'} />
+        <CardDeck lan={'en'} searchString={searchString} setSearchString={setSearchString} />
 
       </Route>
     </Switch>
