@@ -21,13 +21,15 @@ export default function CardDeck(props) {
     }
     useEffect(() => {
 
-        setSearchString("")
-        setsearchMode(false)
         setCurrentPage(1)
-        fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
-            setCurrentData(data['articles'].slice(0, 3))
-        })
-
+        if (!searchMode)
+            fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
+                setCurrentData(data['articles'].slice(0, 3))
+            })
+        else
+            fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
+                setCurrentData(data['articles'].slice(0, 3))
+            })
 
     }, [props.lan])
 

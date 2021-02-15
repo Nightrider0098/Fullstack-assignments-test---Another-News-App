@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function Card(props) {
 
-    const [hiddenState, setHiddenState] = useState((localStorage.getItem(props.lan + props.idx + 'd') === 'true') ? true : false)
+    const [hiddenState, setHiddenState] = useState((props.searchMode === false && localStorage.getItem(props.lan + props.idx + 'd') === 'true') ? true : false)
     const [likes, setLikes] = useState((localStorage.getItem(props.lan + props.idx + 'l') ? parseInt(localStorage.getItem(props.lan + props.idx + 'l')) : 0))
     return (
         <div >
