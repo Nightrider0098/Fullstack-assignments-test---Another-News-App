@@ -6,24 +6,26 @@ export default function Card(props) {
     const [likes, setLikes] = useState((localStorage.getItem(props.lan + props.idx + 'l') ? parseInt(localStorage.getItem(props.lan + props.idx + 'l')) : 0))
     return (
         <div >
-            <a href={props.data.url} >
-                <div style={(hiddenState === true) ? { display: 'none' } : {}} >
-                    <div>
+            <div style={(hiddenState === true) ? { display: 'none' } : {}}>
+                <a href={props.data.url} >
+                    <div  >
                         <div>
-                            {props.data.title}
+                            <div>
+                                {props.data.title}
+                            </div>
+                            <div>
+                                {props.data.source ? props.data.source.name : ""}
+                            </div>
+                            <div>{new Date(props.data.publishedAt).toLocaleDateString('en-US')}</div>
+                            <img src={props.data.image}></img>
                         </div>
-                        <div>
-                            {props.data.source ? props.data.source.name : ""}
-                        </div>
-                        <div>{new Date(props.data.publishedAt).toLocaleDateString('en-US')}</div>
-                        <img src={props.data.image}></img>
                     </div>
-                    <button id={props.lan + props.idx + 'l'} onClick={() => {
-                        localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
-                        setLikes(likes + 1)
-                    }}><span className="like_count">{likes}{" "}</span>Like</button>
-                </div>
-            </a>
+                </a>
+                <button id={props.lan + props.idx + 'l'} onClick={() => {
+                    localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
+                    setLikes(likes + 1)
+                }}><span className="like_count">{likes}{" "}</span>Like</button>
+            </div>
             <div style={props.searchMode ? { display: 'none' } : {}}>
 
                 <button id={props.lan + props.idx + 'd'} onClick={() => {
