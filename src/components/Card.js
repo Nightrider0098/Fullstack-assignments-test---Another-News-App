@@ -16,6 +16,9 @@ export default function Card(props) {
                             <div>
                                 {props.data.source ? props.data.source.name : ""}
                             </div>
+                            <div>
+                                {new Date(props.data.publishedAt).toLocaleTimeString('en-US')}
+                            </div>
                             <div>{new Date(props.data.publishedAt).toLocaleDateString('en-US')}</div>
                             <img src={props.data.image}></img>
                         </div>

@@ -4,8 +4,7 @@ export default function CardDeck(props) {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [currentData, setCurrentData] = useState([])
-    let searchString = props.searchString
-    let setSearchString = props.setSearchString
+    const [searchString, setSearchString] = useState('')
     // const [searchString, setSearchString] = useState('')
     const [justToggle, setJustToggle] = useState(0);
     const [searchMode, setsearchMode] = useState(false);
@@ -31,18 +30,12 @@ export default function CardDeck(props) {
             setCurrentPage(1);
         }
         else {
-            if (searchString !== '') {
-                setsearchMode(true)
-                fetch(`https://gnews.io/api/v4/search?q=${searchString}&token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
-                    setCurrentData(data['articles'])
-                });
-                return;
-            }
-            else {
-                fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
-                    setCurrentData(data['articles'])
-                })
-            }
+
+            setSearchString("")
+            fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
+                setCurrentData(data['articles'])
+            })
+
         }
     }, [props.lan])
 
