@@ -24,18 +24,17 @@ export default function Card(props) {
                         </div>
                     </div>
                 </a>
-                <button id={props.lan + props.idx + 'l'} style={props.searchMode ? { display: 'none' } : {}} onClick={() => {
+                {!props.searchMode ? <button id={props.lan + props.idx + 'l'} onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
                     setLikes(likes + 1)
-                }}><span className="like_count">{likes}{" "}</span>Like</button>
+                }}><span className="like_count">{likes}{" "}</span>Like</button> : ''}
             </div>
-            <div style={props.searchMode ? { display: 'none' } : {}}>
-
+            {!props.searchMode ?
                 <button id={props.lan + props.idx + 'd'} onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'd', !hiddenState)
                     setHiddenState(!hiddenState)
-                }}> Hide</button>
-            </div>
+                }}> Hide</button> : ''}
+
         </div>
     )
 }
