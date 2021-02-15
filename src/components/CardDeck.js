@@ -56,9 +56,7 @@ export default function CardDeck(props) {
         }
     }, [currentPage, justToggle])
 
-    useEffect(() => {
-        console.log(currentData)
-    }, [currentData])
+   
     return (
         <div>
             <input id='searchBox' value={searchString} onChange={(e) => { setSearchString(e.target.value) }} onKeyDown={(e) => {

@@ -15,9 +15,10 @@ export default function Card(props) {
                         <div>
                             {props.data.source ? props.data.source.name : ""}
                         </div>
-                        <div>{props.data.publishedAt}</div>
+                        <div>{new Date(props.data.publishedAt).toLocaleDateString('en-US')}</div>
+                        <img src={props.data.image}></img>
                     </div>
-                    <button onClick={() => {
+                    <button id={props.lan + props.idx + 'l'} onClick={() => {
                         localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
                         setLikes(likes + 1)
                     }}><span className="like_count">{likes}{" "}</span>Like</button>
@@ -25,7 +26,7 @@ export default function Card(props) {
             </a>
             <div style={props.searchMode ? { display: 'none' } : {}}>
 
-                <button onClick={() => {
+                <button id={props.lan + props.idx + 'd'} onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'd', !hiddenState)
                     setHiddenState(!hiddenState)
                 }}> Hide</button>
