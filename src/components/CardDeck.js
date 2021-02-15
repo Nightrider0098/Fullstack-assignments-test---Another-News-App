@@ -32,6 +32,7 @@ export default function CardDeck(props) {
         else {
 
             setSearchString("")
+            setsearchMode(false)
             fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${currentPage}&lang=${props.lan}`).then(e => e.json()).then(data => {
                 setCurrentData(data['articles'])
             })
