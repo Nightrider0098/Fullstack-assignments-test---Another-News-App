@@ -23,7 +23,7 @@ export default function Card(props) {
                 <button onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'l', likes + 1)
                     setLikes(likes + 1)
-                }}><span className="like_count">{likes === true ? 1 : 0}{" "}</span>Like</button>
+                }}><span className="like_count">{likes}{" "}</span>Like</button>
                 <button onClick={() => {
                     localStorage.setItem(props.lan + props.idx + 'd', !hiddenState)
                     setHiddenState(!hiddenState)
