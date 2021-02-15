@@ -10,9 +10,10 @@ export default function CardDeck(props) {
         if (currentData && currentData.length) {
             let lan = props.lan
             let retArray = []
+            console.log(currentData)
             if (currentData.length > 0) {
                 for (let i = 0; i < 3; i++) {
-                    retArray.push(< Card lan={lan} idx={currentPage * 3 + i - 3} searchMode={searchString === '' ? false : true} data={currentData[currentPage * 3 + i - 3]} key={lan + currentPage * 3 + i + 'id'
+                    retArray.push(< Card lan={lan} idx={currentPage * 3 + i - 3} searchMode={searchString === '' ? false : true} data={currentData[i]} key={lan + currentPage * 3 + i + 'id'
                     } />)
                 }
             } return retArray;
@@ -26,7 +27,7 @@ export default function CardDeck(props) {
         setsearchMode(false)
 
         fetch(`https://gnews.io/api/v4/top-headlines?token=410db42779f25b2d81028050efe65502&page=${1}&lang=${props.lan}`).then(e => e.json()).then(data => {
-            setCurrentData(data['articles'].slice(currentPage * 3 - 3, currentPage * 3 - 1))
+            setCurrentData(data['articles'].slice(currentPage * 3 - 3, currentPage * 3 ))
         })
 
 
